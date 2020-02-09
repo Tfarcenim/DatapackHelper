@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "datapackhelper:block/crafting_table" }
+  }
+}
