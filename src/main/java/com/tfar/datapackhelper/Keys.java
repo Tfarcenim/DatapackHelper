@@ -12,10 +12,6 @@ public class Keys {
 
   private static Map<Pair<String,Boolean>, String> map = new HashMap<>();
 
-  private static void next() {
-    index++;
-  }
-
   public static void clear() {
     map.clear();
     map.put(Pair.of("minecraft:air",false), " ");
@@ -27,6 +23,7 @@ public class Keys {
   }
 
   public static void put(ItemStack item) {
+    if (item.isEmpty())return;
     boolean use_tag = item.getOrCreateChildTag(DatapackHelper.MODID).getBoolean("use_tag");
     if (use_tag){
       String name = item.getOrCreateChildTag(DatapackHelper.MODID).getString("tag");
@@ -35,6 +32,6 @@ public class Keys {
       String name = item.getItem().getRegistryName().toString();
       map.put(Pair.of(name,false), keys[index]);
     }
-    next();
+    index++;
   }
 }

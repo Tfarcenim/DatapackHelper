@@ -27,6 +27,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.items.ItemStackHandler;
 import org.apache.logging.log4j.core.util.Integers;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Files;
@@ -153,6 +154,7 @@ public class FurnaceDesignerScreen extends ContainerScreen<FurnaceDesignerContai
   }
 
   @Override
+  @Nonnull
   public List<String> getTooltipFromItem(ItemStack stack) {
     List<String> tooltip = super.getTooltipFromItem(stack);
     if (stack.hasTag() && stack.getOrCreateChildTag("datapackhelper").getBoolean("use_tag")) {
@@ -184,8 +186,8 @@ public class FurnaceDesignerScreen extends ContainerScreen<FurnaceDesignerContai
     if (keyCode == GLFW_KEY_ESCAPE) {
       this.minecraft.player.closeScreen();
     }
-    return this.cooktime.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_) || this.cooktime.func_212955_f()
-            || this.experience.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_) || this.experience.func_212955_f()
+    return this.cooktime.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_) || this.cooktime.canWrite()
+            || this.experience.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_) || this.experience.canWrite()
 
             || super.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_);
   }

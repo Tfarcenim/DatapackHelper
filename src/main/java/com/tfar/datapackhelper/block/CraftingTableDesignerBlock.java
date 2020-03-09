@@ -23,7 +23,7 @@ public class CraftingTableDesignerBlock extends Block implements INamedContainer
   }
 
   @Override
-  public ActionResultType func_225533_a_(BlockState p_225533_1_, World world, BlockPos pos, PlayerEntity player, Hand p_225533_5_, BlockRayTraceResult p_225533_6_) {
+  public ActionResultType onBlockActivated(BlockState p_225533_1_, World world, BlockPos pos, PlayerEntity player, Hand p_225533_5_, BlockRayTraceResult p_225533_6_) {
     if (!world.isRemote) {
       player.openContainer(this);
     }

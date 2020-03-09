@@ -32,7 +32,27 @@ public class Util {
       JsonObject json = new JsonObject();
       json.addProperty("type", screen.shapeless ? "minecraft:crafting_shapeless" : "minecraft:crafting_shaped");
       List<List<ItemStack>> pattern = new ArrayList<>();
-      if (!screen.shapeless) {
+      if (screen.shapeless) {
+
+        JsonArray jsonArray = new JsonArray();
+
+        IntStream.range(1,10)
+                .mapToObj(handler::getStackInSlot)
+                .filter(stack1 -> !stack1.isEmpty())
+                .forEach(stack -> {
+                  JsonObject jsonObject2 = new JsonObject();
+
+                  boolean use_tag = stack.getOrCreateChildTag(DatapackHelper.MODID).getBoolean("use_tag");
+                  if (use_tag)
+                    jsonObject2.addProperty("tag",stack.getOrCreateChildTag(DatapackHelper.MODID).getString("tag"));
+                  else
+                    jsonObject2.addProperty("item",stack.getItem().getRegistryName().toString());
+                  jsonArray.add(jsonObject2);
+                });
+
+        json.add("ingredients",jsonArray);
+      }
+      else {
         for (int y = 0; y < 3; y++) {
           ItemStack x1 = handler.getStackInSlot(1 + 3 * y);
           ItemStack x2 = handler.getStackInSlot(2 + 3 * y);
@@ -156,27 +176,6 @@ public class Util {
         json.add("key",jsonObject);
       }
 
-      if (screen.shapeless){
-
-        JsonArray jsonArray = new JsonArray();
-
-        IntStream.range(1,10)
-                .mapToObj(handler::getStackInSlot)
-                .filter(ItemStack::isEmpty)
-                .forEach(stack -> {
-                  JsonObject jsonObject2 = new JsonObject();
-
-                  boolean use_tag = stack.getOrCreateChildTag(DatapackHelper.MODID).getBoolean("use_tag");
-                  if (use_tag)
-                    jsonObject2.addProperty("tag",stack.getOrCreateChildTag(DatapackHelper.MODID).getString("tag"));
-                  else
-                    jsonObject2.addProperty("item",stack.getItem().getRegistryName().toString());
-                  jsonArray.add(jsonObject2);
-                });
-
-        json.add("ingredients",jsonArray);
-      }
-
 
       ItemStack result = handler.getStackInSlot(0);
       JsonObject jsonObject1 = new JsonObject();
@@ -202,7 +201,7 @@ public class Util {
     }
   }
 
-  public static void saveFurnace(FurnaceDesignerScreen screen){
+  public static void saveFurnace(FurnaceDesignerScreen screen) {
 
   }
 
